@@ -38,13 +38,13 @@ services:
       dockerfile: dockerfiles/composer.dockerfile
     volumes:
       - .:/var/www/html
-#  artisan:
-#    build:
-#      context: ./dockerfiles
-#      dockerfile: dockerfiles/php.dockerfile
-#    volumes:
-#      - .:/var/www/html
-#    entrypoint: ["php", "/var/www/html/artisan"]
+  artisan:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    volumes:
+      - .:/var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
   npm:
     image: node:16
     working_dir: /var/www/html

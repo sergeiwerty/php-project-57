@@ -8,11 +8,11 @@ setup:
 	touch database/database.sqlite
 	php artisan migrate
 	php artisan db:seed
-#	npm ci
-#	npm run build
+	npm ci
+	npm run build
 
 install:
-	composer install --ignore-platform-reqs
+	composer install
 
 validate:
 	composer validate
