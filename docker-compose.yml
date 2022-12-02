@@ -14,7 +14,7 @@ services:
       - pgsql
   php:
     build:
-      context: ./dockerfiles
+      context: dockerfiles
       dockerfile: dockerfiles/php.dockerfile
     volumes:
       - .:/var/www/html
@@ -34,14 +34,14 @@ services:
       - ./postgres-data1:/var/lib/postgresql/data
   composer:
     build:
-      context: ./dockerfiles
+      context: dockerfiles
       dockerfile: dockerfiles/composer.dockerfile
     volumes:
       - .:/var/www/html
   artisan:
     build:
-      context: ./dockerfiles
-      dockerfile: php.dockerfile
+      context: dockerfiles
+      dockerfile: dockerfiles/php.dockerfile
     volumes:
       - .:/var/www/html
     entrypoint: ["php", "/var/www/html/artisan"]
