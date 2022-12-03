@@ -6,4 +6,4 @@ USER laravel
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["composer", "--ignore-platform-regs"]
+ENTRYPOINT ["composer", "--ignore-platform-reqs"]

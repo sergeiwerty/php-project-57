@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 
 services:
   server:
@@ -14,16 +14,14 @@ services:
       - pgsql
   php:
     build:
-      context: dockerfiles
-      dockerfile: dockerfiles/php.dockerfile
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
     volumes:
       - .:/var/www/html
   pgsql:
     image: postgres:13-alpine
     ports:
       - "5432:5432"
-    env_file:
-      - pgsql.env
     environment:
       DB_HOST: pgsql
       POSTGRES_USER: homestead
@@ -34,14 +32,14 @@ services:
       - ./postgres-data1:/var/lib/postgresql/data
   composer:
     build:
-      context: dockerfiles
-      dockerfile: dockerfiles/composer.dockerfile
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
     volumes:
       - .:/var/www/html
   artisan:
     build:
-      context: dockerfiles
-      dockerfile: dockerfiles/php.dockerfile
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
     volumes:
       - .:/var/www/html
     entrypoint: ["php", "/var/www/html/artisan"]
