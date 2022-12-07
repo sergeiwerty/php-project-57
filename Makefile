@@ -29,3 +29,10 @@ test:
 
 test-coverage:
 	XDEBUG_MODE=coverage php artisan test --coverage-clover build/logs/clover.xml
+
+clear-cache:
+	docker-compose run --rm artisan cache:clear
+	docker-compose run --rm artisan config:cache
+	docker-compose run --rm artisan view:clear
+	docker-compose run --rm artisan route:clear
+	docker-compose run --rm artisan config:clear
