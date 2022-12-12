@@ -39,4 +39,4 @@
             
         </div>
     </div>
-</nav><?php /**PATH /home/user/development/php-project-lvl4/resources/views/shared/navbar.blade.php ENDPATH**/ ?>
+</nav><?php /**PATH /var/www/html/resources/views/shared/navbar.blade.php ENDPATH**/ ?>

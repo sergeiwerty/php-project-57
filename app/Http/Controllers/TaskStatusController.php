@@ -14,7 +14,8 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = TaskStatus::all();
+        return view('taskStatus.index', compact('tasks'));
     }
 
     /**
@@ -24,7 +25,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
