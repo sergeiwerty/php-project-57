@@ -6,7 +6,7 @@
         <div class="grid col-span-full">
             <h1 class="mb-5">Статусы</h1>
             <div>
-                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href="">Создать статус</a>
+                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={{ route('task_statuses.create') }}>Создать статус</a>
             </div>
             <table>
                 <thead class="border-b-2 border-solid border-black text-left">

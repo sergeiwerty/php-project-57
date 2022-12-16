@@ -25,7 +25,8 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-
+        $taskStatus = new TaskStatus();
+        return view('taskStatus.create', compact('taskStatus'));
     }
 
     /**
@@ -36,19 +37,23 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (TaskStatus::findOrFail($request->id)) {
+            flash('Статус с таким именем уже существует')->info();
+        }
+
+        return redirect()->route('task_statuses.create');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TaskStatus $taskStatus)
-    {
-        //
-    }
+//    /**
+//     * Display the specified resource.
+//     *
+//     * @param  \App\Models\TaskStatus  $taskStatus
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function show(TaskStatus $taskStatus)
+//    {
+//        $taskStatus
+//    }
 
     /**
      * Show the form for editing the specified resource.

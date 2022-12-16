@@ -27,11 +27,53 @@ class TaskStatusTest extends TestCase
 
     public function testIndex()
     {
-        $tasks = TaskStatus::factory()->count(10)->create();
+        $taskStatuses = TaskStatus::factory()->count(10)->create();
         $response = $this->get(route('task_statuses.index'));
         $response->assertStatus(200);
-        dump($tasks[7]->name);
-        $response->assertSeeText($tasks[0]->name);
-        $response->assertSeeText($tasks[7]->name);
+        $response->assertSeeText($taskStatuses[0]->name);
+        $response->assertSeeText($taskStatuses[7]->name);
     }
+
+//    public function testShow()
+//    {
+//        $taskStatus = TaskStatus::factory()->create();
+//        $response = $this->get(route('task_statuses.create', $taskStatus->id));
+//        $response->assertStatus(200);
+//        $response->assertSeeText($taskStatus->name);
+//        $response->assertSee('<tr>', false);
+//    }
+
+    public function testCreate()
+    {
+        $response = $this->get(route('task_statuses.create'));
+        $response->assertStatus(200);
+    }
+    public function testEdit()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $response = $this->get(route('task_statuses.edit', []));
+    }
+
+    public function testStoreWithValidationErrors()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $params = [
+            '_token' => csrf_token(),
+            'name' => '',
+        ];
+        $response = $this->post(route('task_statuses.store'), $params);
+//        $response->assertStatus(302);
+        $response->assertSessionHasErrors();
+
+        $this->assertDatabaseMissing('task_statuses', $params);
+    }
+    public function testStore()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $params = [
+            'name' => 'pending approval',
+        ];
+        $response = $this->post(route('task_statuses.store'));
+    }
+
 }
