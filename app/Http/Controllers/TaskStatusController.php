@@ -33,15 +33,31 @@ class TaskStatusController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        if (TaskStatus::findOrFail($request->id)) {
+        if (TaskStatus::where('name', '=', $request->name)->exists()) {
+//            dump($request->name);
             flash('Статус с таким именем уже существует')->info();
+//            sleep(800);
+
+//            return redirect()->route('task_statuses.create');
         }
 
-        return redirect()->route('task_statuses.create');
+        $request->validate([
+            'name' => 'required|max:100|unique:App\Models\TaskStatus,name'
+        ], [
+            'name.unique:App\Models\TaskStatus,name' => 'Статус с таким именем уже существует',
+            'name.required' => 'Это обязательное поле',
+            'name.max:100' => 'Превышена максимальная длина в 100 символов'
+        ]);
+
+        $taskStatus = new TaskStatus();
+        $taskStatus->fill($request->all());
+        $taskStatus->save();
+
+        return redirect()->route('task_statuses.index');
     }
 
 //    /**

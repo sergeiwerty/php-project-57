@@ -33,7 +33,7 @@
                         @if($errors->any())
                             <div class="text-rose-600">
                                 @foreach($errors->all() as $error)
-                                    <div>{{ $error }}</div>
+                                    {{ $error }}
                                 @endforeach
                             </div>
                         @endif

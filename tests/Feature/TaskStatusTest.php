@@ -62,7 +62,7 @@ class TaskStatusTest extends TestCase
             'name' => '',
         ];
         $response = $this->post(route('task_statuses.store'), $params);
-//        $response->assertStatus(302);
+        $response->assertStatus(302);
         $response->assertSessionHasErrors();
 
         $this->assertDatabaseMissing('task_statuses', $params);
