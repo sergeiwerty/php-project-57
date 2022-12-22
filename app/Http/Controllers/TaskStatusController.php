@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
+use function GuzzleHttp\Promise\task;
+
 class TaskStatusController extends Controller
 {
 //    public function __construct() {
@@ -72,17 +74,6 @@ class TaskStatusController extends Controller
         return redirect()->route('task_statuses.index');
     }
 
-//    /**
-//     * Display the specified resource.
-//     *
-//     * @param  \App\Models\TaskStatus  $taskStatus
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function show(TaskStatus $taskStatus)
-//    {
-//        $taskStatus
-//    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -91,8 +82,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        $taskStatus = TaskStatus::findOrFail($taskStatus->id);
-        return view('taskStatus.edit', compact('taskStatus'));
+        $updatedTaskStatus = TaskStatus::findOrFail($taskStatus->id);
+        return view('taskStatus.edit', compact('updatedTaskStatus'));
     }
 
     /**
@@ -104,7 +95,19 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
+        $updatedTaskStatus = TaskStatus::findOrFail($taskStatus->id);
+        $this->validate($request, [
+            'name' => 'required|max:100|unique:App\Models\TaskStatus,name'. $updatedTaskStatus->id,
+        ], [
+            'name.required' => 'Это обязательное поле',
+            'name.max:100' => 'Превышена максимальная длина в 100 символов'
+        ]);
 
+        $taskStatus = new TaskStatus();
+        $taskStatus->fill($request->all());
+        $taskStatus->save();
+
+        return redirect()->route('task_statuses.index');
     }
 
     /**

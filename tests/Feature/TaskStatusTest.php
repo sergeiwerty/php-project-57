@@ -53,32 +53,12 @@ class TaskStatusTest extends TestCase
         }
     }
 
-
     public function testCreate()
     {
-
         $user = User::factory()->create(['id' => 3]);
         $this->actingAs($user);
         $response = $this->get(route('task_statuses.create'));
         $response->assertStatus(200);
-    }
-    public function testEdit()
-    {
-        $taskStatus = TaskStatus::factory()->create();
-        $response = $this->get(route('task_statuses.edit', $taskStatus));
-        $response->assertSee('PATCH');
-        $response->assertStatus(200);
-    }
-
-    public function testUpdateWithValidationErrors()
-    {
-        $taskStatus = TaskStatus::factory()->create();
-        $params = [
-            '_token' => csrf_token(),
-            'name' => '',
-        ];
-        $response = $this->patch(route('task_statuses.store'), $params);
-        $response->assertSessionHasErrors();
     }
 
     public function testStoreWithValidationErrors()
@@ -94,6 +74,7 @@ class TaskStatusTest extends TestCase
 
         $this->assertDatabaseMissing('task_statuses', $params);
     }
+
     public function testStore()
     {
         $taskStatus = TaskStatus::factory()->create();
@@ -101,6 +82,35 @@ class TaskStatusTest extends TestCase
             'name' => 'pending approval',
         ];
         $response = $this->post(route('task_statuses.store'));
+    }
+
+    public function testEdit()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $response = $this->get(route('task_statuses.edit', $taskStatus));
+        $response->assertSee('PATCH');
+        $response->assertStatus(200);
+    }
+    public function testUpdateWithValidationErrors()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $params = [
+            '_token' => csrf_token(),
+            'name' => '',
+        ];
+        $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
+        $response->assertSessionHasErrors();
+    }
+
+    public function testUpdate()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $params = [
+            '_token' => csrf_token(),
+            'name' => 'needed correction',
+        ];
+        $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
+        $response->assertSessionHasNoErrors();
     }
 
 }
