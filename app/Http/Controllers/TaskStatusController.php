@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class TaskStatusController extends Controller
 {
+//    public function __construct() {
+//
+//        $this->middleware('auth', ['only' => ['create']]);
+//
+//        $this->middleware('auth', ['only' => ['store']]);
+//    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +23,8 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        $tasks = TaskStatus::all();
-        return view('taskStatus.index', compact('tasks'));
+        $taskStatuses = TaskStatus::all();
+        return view('taskStatus.index', compact('taskStatuses'));
     }
 
     /**
@@ -25,8 +34,11 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        $taskStatus = new TaskStatus();
-        return view('taskStatus.create', compact('taskStatus'));
+        if (Auth::check()) {
+            $taskStatus = new TaskStatus();
+            return view('taskStatus.create', compact('taskStatus'));
+        }
+        return redirect('/login');
     }
 
     /**
@@ -34,21 +46,21 @@ class TaskStatusController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
         if (TaskStatus::where('name', '=', $request->name)->exists()) {
 //            dump($request->name);
-            flash('Статус с таким именем уже существует')->info();
+//            flash('уже существует')->info();
 //            sleep(800);
 
 //            return redirect()->route('task_statuses.create');
         }
 
-        $request->validate([
+        $this->validate($request, [
             'name' => 'required|max:100|unique:App\Models\TaskStatus,name'
         ], [
-            'name.unique:App\Models\TaskStatus,name' => 'Статус с таким именем уже существует',
             'name.required' => 'Это обязательное поле',
             'name.max:100' => 'Превышена максимальная длина в 100 символов'
         ]);
@@ -79,7 +91,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        //
+        $taskStatus = TaskStatus::findOrFail($taskStatus->id);
+        return view('taskStatus.edit', compact('taskStatus'));
     }
 
     /**
@@ -91,7 +104,7 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        //
+
     }
 
     /**

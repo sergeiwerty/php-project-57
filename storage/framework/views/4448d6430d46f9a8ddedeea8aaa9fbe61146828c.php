@@ -3,9 +3,11 @@
     <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
         <div class="grid col-span-full">
             <h1 class="mb-5">Статусы</h1>
-            <div>
-                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href=<?php echo e(route('task_statuses.create')); ?>>Создать статус</a>
-            </div>
+            <?php if(auth()->guard()->check()): ?>
+                <div>
+                    <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href=<?php echo e(route('task_statuses.create')); ?>>Создать статус</a>
+                </div>
+            <?php endif; ?>
             <table>
                 <thead class="border-b-2 border-solid border-black text-left">
                 <tr>
@@ -16,12 +18,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php $__currentLoopData = $tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php $__currentLoopData = $taskStatuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $taskStatus): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr class="border-b border-dashed text-left">
-                        <th><?php echo e($task->id); ?></th>
-                        <td><?php echo e($task->name); ?></td>
-                        <td><?php echo e($task->created_at); ?></td>
-                        <td></td>
+                        <th><?php echo e($taskStatus->id); ?></th>
+                        <td><?php echo e($taskStatus->name); ?></td>
+                        <td><?php echo e($taskStatus->created_at); ?></td>
+                        <td>
+                            <a data-confirm="Вы уверены?" data-method="delete" class="text-red-600 hover:text-red-900" href="">
+                                Удалить
+                            </a>
+                            <a class="text-blue-600 hover:text-blue-900" href="<?php echo e(route('task_statuses.edit', $taskStatus)); ?>">
+                                Изменить
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
