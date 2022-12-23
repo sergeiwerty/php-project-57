@@ -113,4 +113,13 @@ class TaskStatusTest extends TestCase
         $response->assertSessionHasNoErrors();
     }
 
+    public function testDestroy()
+    {
+        $taskStatus = TaskStatus::factory()->create();
+        $response = $this->delete(route('task_statuses.destroy', $taskStatus));
+        $response->assertStatus(302);
+
+        $taskStatusTest = TaskStatus::find($taskStatus->id);
+        $this->assertNull($taskStatusTest);
+    }
 }

@@ -24,7 +24,11 @@
                         <td><?php echo e($taskStatus->name); ?></td>
                         <td><?php echo e($taskStatus->created_at); ?></td>
                         <td>
-                            <a data-confirm="Вы уверены?" data-method="delete" class="text-red-600 hover:text-red-900" href="">
+                            <a href="<?php echo e(route('task_statuses.destroy', $taskStatus)); ?>"
+                               class="text-red-600 hover:text-red-900"
+                               data-confirm="Вы уверены?"
+                               data-method="delete"
+                               rel="nofollow">
                                 Удалить
                             </a>
                             <a class="text-blue-600 hover:text-blue-900" href="<?php echo e(route('task_statuses.edit', $taskStatus)); ?>">
