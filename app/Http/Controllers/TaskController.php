@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
+use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -14,7 +17,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-
+        $tasks = Task::all();
+        return view('task.index', compact('tasks'));
     }
 
     /**
@@ -24,7 +28,13 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::check()) {
+            $task = new Task();
+            $statuses = TaskStatus::all()->pluck('name');
+            $performers = User::all()->pluck('name');
+            return view('task.create', compact('task', 'statuses', 'performers'));
+        }
+        return redirect('/login');
     }
 
     /**

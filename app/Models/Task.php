@@ -10,18 +10,18 @@ class Task extends Model
 {
     use HasFactory;
 
-    public function creator(): void
+    public function creator(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        $this->belongsTo(User::class, 'creator_id');
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
-    public function performer(): void
+    public function performer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        $this->belongsTo(User::class, 'performer_id');
+        return $this->belongsTo(User::class, 'performer_id');
     }
 
-    public function status(): void
+    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        $this->belongsTo(TaskStatus::class, 'status_id');
+        return $this->belongsTo(TaskStatus::class, 'status_id');
     }
 }
