@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
@@ -32,7 +33,8 @@ class TaskController extends Controller
             $task = new Task();
             $statuses = TaskStatus::all()->pluck('name');
             $performers = User::all()->pluck('name');
-            return view('task.create', compact('task', 'statuses', 'performers'));
+            $labels = Label::all()->pluck('name');
+            return view('task.create', compact('task', 'statuses', 'performers', 'labels'));
         }
         return redirect('/login');
     }
@@ -45,7 +47,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = new Task();
+        $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
+        $task->save();
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -67,7 +73,11 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $updatedTask = Task::findOrFail($task->id);
+        $statuses = TaskStatus::all()->pluck('name');
+        $performers = User::all()->pluck('name');
+        $labels = Label::all()->pluck('name');
+        return view('task.edit', compact('updatedTask', 'statuses', 'performers', 'labels'));
     }
 
     /**
@@ -79,7 +89,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $updatedTask = Task::findOrFail($task->id);
+
+//        validations
+
+        $task = new Task();
+        $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
+        $task->save();
+
+        return redirect()->route('tasks.index');
     }
 
     /**

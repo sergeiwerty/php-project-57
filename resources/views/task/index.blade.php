@@ -9,7 +9,7 @@
                     <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={{ route('tasks.create') }}>Создать задачу</a>
                 </div>
             @endauth
-            <table>
+            <table class="mt-4">
                 <thead class="border-b-2 border-solid border-black text-left">
                 <tr>
                     <th>ID</th>
@@ -18,16 +18,17 @@
                     <th>Автор</th>
                     <th>Исполнитель</th>
                     <th>Дата создания</th>
+                    <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($tasks as $task)
                     <tr class="border-b border-dashed text-left">
                         <th>{{ $task->id }}</th>
-                        <td>{{ $task->status }}</td>
-                        <td>{{ $task->description }}</td>
-                        <td>{{ $task->creator }}</td>
-                        <td>{{ $task->performer }}</td>
+                        <td>{{ $task->status->name }}</td>
+                        <td>{{ is_null($task->description) ? '' : $task->description }}</td>
+                        <td>{{ $task->creator->name }}</td>
+                        <td>{{ is_null($task->performer) ? '' : $task->performer->name }}</td>
                         <td>{{ $task->created_at }}</td>
                         <td>
 {{--                            <a href="{{ route('task_statuses.destroy', $taskStatus) }}"--}}
@@ -37,9 +38,9 @@
 {{--                               rel="nofollow">--}}
 {{--                                Удалить--}}
 {{--                            </a>--}}
-{{--                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">--}}
-{{--                                Изменить--}}
-{{--                            </a>--}}
+                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
+                                Изменить
+                            </a>
                         </td>
                     </tr>
                 @endforeach

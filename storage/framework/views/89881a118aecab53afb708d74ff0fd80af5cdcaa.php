@@ -18,6 +18,9 @@
     <?php echo e(Form::label('status_id', 'Статус')); ?>
 
 </div>
+
+
+
 <div >
     <?php echo e(Form::select('status_id', $statuses, null, [
         'class' => 'rounded border-gray-300 w-1/3',
@@ -31,6 +34,17 @@
 </div>
 <div >
     <?php echo e(Form::select('assigned_to_id', $performers, null, [
+        'class' => 'rounded border-gray-300 w-1/3',
+        'placeholder' => '----------',
+    ])); ?>
+
+</div>
+<div class="mt-2">
+    <?php echo e(Form::label('labels', 'Метки')); ?>
+
+</div>
+<div >
+    <?php echo e(Form::select('labels', $labels, null, [
         'class' => 'rounded border-gray-300 w-1/3',
         'placeholder' => '----------',
     ])); ?>

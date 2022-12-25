@@ -8,7 +8,7 @@
                     <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href=<?php echo e(route('task_statuses.create')); ?>>Создать статус</a>
                 </div>
             <?php endif; ?>
-            <table>
+            <table class="mt-4">
                 <thead class="border-b-2 border-solid border-black text-left">
                 <tr>
                     <th>ID</th>

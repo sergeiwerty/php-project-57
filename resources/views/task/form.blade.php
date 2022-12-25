@@ -13,6 +13,9 @@
 <div class="mt-2">
     {{ Form::label('status_id', 'Статус') }}
 </div>
+{{--<div>--}}
+{{--    {{ Form::text('created_by_id', null, ['style' => 'display:none;', 'value' ]) }}--}}
+{{--</div>--}}
 <div >
     {{ Form::select('status_id', $statuses, null, [
         'class' => 'rounded border-gray-300 w-1/3',
@@ -24,6 +27,15 @@
 </div>
 <div >
     {{ Form::select('assigned_to_id', $performers, null, [
+        'class' => 'rounded border-gray-300 w-1/3',
+        'placeholder' => '----------',
+    ]) }}
+</div>
+<div class="mt-2">
+    {{ Form::label('labels', 'Метки') }}
+</div>
+<div >
+    {{ Form::select('labels', $labels, null, [
         'class' => 'rounded border-gray-300 w-1/3',
         'placeholder' => '----------',
     ]) }}
