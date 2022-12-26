@@ -6,6 +6,10 @@ h1 {
     font-size: 3rem;
 }
 
+h2 {
+    font-size: 2rem;
+}
+
 .alert.alert-info  {
     --tw-text-opacity: 1;
     color:rgb(225 29 72 / var(--tw-text-opacity));

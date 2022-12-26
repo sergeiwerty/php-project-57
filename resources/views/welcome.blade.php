@@ -1,12 +1,13 @@
 @extends('layouts.app')
 @section('content')
-{{--    <div class="col col-md-10 col-lg-8 mx-auto border rounded-3 bg-light p-5 mt-3">--}}
-{{--        <h1 class="display-3">Анализатор страниц</h1>--}}
-{{--        <p for="exampleInputEmail1" class="form-label">Бесплатно проверяйте сайты на SEO пригодность</p>--}}
-{{--        <form class="d-flex justify-content-center" action="{{ route('urls.store') }}" method="POST">--}}
-{{--            @csrf--}}
-{{--            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="url[name]" placeholder="https://www.example.com">--}}
-{{--            <input type="submit" class="btn btn-primary" value="Проверить">--}}
-{{--        </form>--}}
-{{--    </div>--}}
+    <div class="mr-auto place-self-center lg:col-span-7">
+        <h1 class="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
+            Hi all!        </h1>
+        <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            Это простой менеджер задач на Laravel        </p>
+        <div class="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+            <a href="https://github.com/sergeiwerty" class="bg-slate-600 hover:bg-emerald-400 hover:text-zinc-900 text-neutral-50 font-semibold py-2 px-4 border border-gray-400 rounded shadow" target="_blank">
+                My GitHub            </a>
+        </div>
+    </div>
 @endsection('content')

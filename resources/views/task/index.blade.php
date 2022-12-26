@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
         <div class="grid col-span-full">
             <h1 class="mb-5">Задачи</h1>
             @auth
@@ -26,7 +25,7 @@
                     <tr class="border-b border-dashed text-left">
                         <th>{{ $task->id }}</th>
                         <td>{{ $task->status->name }}</td>
-                        <td>{{ is_null($task->description) ? '' : $task->description }}</td>
+                        <td><a href="{{ route('tasks.show', [$task]) }}" class="text-blue-600 hover:text-blue-900">{{ $task->name }}</a></td>
                         <td>{{ $task->creator->name }}</td>
                         <td>{{ is_null($task->performer) ? '' : $task->performer->name }}</td>
                         <td>{{ $task->created_at }}</td>
@@ -47,5 +46,4 @@
                 </tbody>
             </table>
         </div>
-    </div>
 @endsection('content')

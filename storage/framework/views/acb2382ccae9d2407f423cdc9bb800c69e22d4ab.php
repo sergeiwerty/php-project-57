@@ -1,5 +1,4 @@
 <?php $__env->startSection('content'); ?>
-    <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
         <div class="grid col-span-full">
             <h1 class="mb-5">Задачи</h1>
             <?php if(auth()->guard()->check()): ?>
@@ -24,7 +23,7 @@
                     <tr class="border-b border-dashed text-left">
                         <th><?php echo e($task->id); ?></th>
                         <td><?php echo e($task->status->name); ?></td>
-                        <td><?php echo e(is_null($task->description) ? '' : $task->description); ?></td>
+                        <td><a href="<?php echo e(route('tasks.show', [$task])); ?>" class="text-blue-600 hover:text-blue-900"><?php echo e($task->name); ?></a></td>
                         <td><?php echo e($task->creator->name); ?></td>
                         <td><?php echo e(is_null($task->performer) ? '' : $task->performer->name); ?></td>
                         <td><?php echo e($task->created_at); ?></td>
@@ -45,6 +44,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/resources/views/task/index.blade.php ENDPATH**/ ?>

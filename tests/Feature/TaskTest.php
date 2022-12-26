@@ -48,8 +48,17 @@ class TaskTest extends TestCase
 
         $response->assertStatus(302);
         $this->assertDatabaseHas('tasks', [
-           'name' => 'fix all errors'
+            'name' => 'fix all errors'
         ]);
+    }
+
+    public function testShow()
+    {
+        $task = Task::factory()->create();
+        $response = $this->get(route('tasks.show', $task));
+        $response->assertStatus(200);
+        $response->assertSeeText($task->name);
+        $response->assertSeeText($task->status_id);
     }
 
     public function testEdit()

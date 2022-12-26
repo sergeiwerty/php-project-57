@@ -15,31 +15,29 @@
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <body class="vsc-initialized">
-<header>
     <?php echo $__env->make('shared.navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-</header>
-<div class="container">
-    <div class="row">
-        <?php echo $__env->yieldContent('content'); ?>
-    </div>
-</div>
+    <section class="bg-white dark:bg-gray-900">
+        <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
+            <?php echo $__env->yieldContent('content'); ?>
+        </div>
+    </section>
+    
+    
 
+    
+    
+    
+    
+    
+    
+    
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
+    
+    
+    
+    
+    
+    </body>
 </html>
 <?php /**PATH /var/www/html/resources/views/layouts/app.blade.php ENDPATH**/ ?>
