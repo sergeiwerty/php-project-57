@@ -20,21 +20,16 @@
 
                     <?php echo csrf_field(); ?>
                     <div class="flex flex-col">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         <?php echo $__env->make('taskStatus.form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+
+
+
+
+
+
+
+
                         <div class="mt-5">
                             <?php echo e(Form::submit('Создать', ['class' => "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"])); ?>
 

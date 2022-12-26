@@ -21,13 +21,7 @@
                 {{ Form::model($taskStatus, ['url' => route('task_statuses.store'), 'class' => 'w-50']) }}
                     @csrf
                     <div class="flex flex-col">
-{{--                        <div>--}}
-{{--                            {{ Form::label('name', 'Имя') }}--}}
-{{--                        </div>--}}
-{{--                        <div class="mt-5">--}}
-{{--                            {{ Form::text('name', '', array_merge(['class' => 'rounded border-gray-300 w-1/3'])) }}--}}
-{{--                        </div>--}}
-{{--                        @include('flash::message')--}}
+                        @include('taskStatus.form')
 {{--                        @if($errors->any())--}}
 {{--                            <div class="text-rose-600">--}}
 {{--                                @foreach($errors->all() as $error)--}}
@@ -35,7 +29,8 @@
 {{--                                @endforeach--}}
 {{--                            </div>--}}
 {{--                        @endif--}}
-                        @include('taskStatus.form')
+{{--                        @include('flash::message')--}}
+
                         <div class="mt-5">
                             {{ Form::submit('Создать', ['class' => "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"])}}
                         </div>

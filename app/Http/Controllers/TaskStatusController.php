@@ -52,19 +52,19 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        if (TaskStatus::where('name', '=', $request->name)->exists()) {
-//            dump($request->name);
-//            flash('уже существует')->info();
-//            sleep(800);
-
-//            return redirect()->route('task_statuses.create');
-        }
+//        $taskStatus = new TaskStatus();
+//        if (TaskStatus::where('name', '=', $request->name)->exists()) {
+//            flash('Статус с таким именем уже существует')->info();
+//
+//            return redirect()->back();
+//        }
 
         $this->validate($request, [
             'name' => 'required|max:100|unique:App\Models\TaskStatus,name'
         ], [
             'name.required' => 'Это обязательное поле',
-            'name.max:100' => 'Превышена максимальная длина в 100 символов'
+            'name.max:100' => 'Превышена максимальная длина в 100 символов',
+            'name.unique' => 'Статус с таким именем уже существует',
         ]);
 
         $taskStatus = new TaskStatus();

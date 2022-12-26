@@ -22,6 +22,7 @@
                         <td><?php echo e($taskStatus->name); ?></td>
                         <td><?php echo e($taskStatus->created_at); ?></td>
                         <td>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['update', 'delete'], $taskStatus)): ?>
                             <a href="<?php echo e(route('task_statuses.destroy', $taskStatus)); ?>"
                                class="text-red-600 hover:text-red-900"
                                data-confirm="Вы уверены?"
@@ -32,6 +33,7 @@
                             <a class="text-blue-600 hover:text-blue-900" href="<?php echo e(route('task_statuses.edit', $taskStatus)); ?>">
                                 Изменить
                             </a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

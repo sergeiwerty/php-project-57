@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class TaskStatusPolicy
 {
@@ -53,7 +54,7 @@ class TaskStatusPolicy
      */
     public function update(User $user, TaskStatus $taskStatus)
     {
-        //
+        return Auth::check() ? Auth::check() : false;
     }
 
     /**
@@ -65,7 +66,7 @@ class TaskStatusPolicy
      */
     public function delete(User $user, TaskStatus $taskStatus)
     {
-        //
+        return Auth::check() ? Auth::check() : false;
     }
 
     /**

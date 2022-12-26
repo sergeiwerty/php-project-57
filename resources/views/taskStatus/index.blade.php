@@ -24,6 +24,7 @@
                         <td>{{ $taskStatus->name }}</td>
                         <td>{{ $taskStatus->created_at }}</td>
                         <td>
+                            @canany(['update', 'delete'], $taskStatus)
                             <a href="{{ route('task_statuses.destroy', $taskStatus) }}"
                                class="text-red-600 hover:text-red-900"
                                data-confirm="Вы уверены?"
@@ -34,6 +35,7 @@
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_statuses.edit', $taskStatus) }}">
                                 Изменить
                             </a>
+                            @endcanany
                         </td>
                     </tr>
                 @endforeach
