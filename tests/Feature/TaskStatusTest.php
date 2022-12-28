@@ -36,15 +36,6 @@ class TaskStatusTest extends TestCase
         $response->assertSeeText($taskStatuses[7]->name);
     }
 
-//    public function testShow()
-//    {
-//        $taskStatus = TaskStatus::factory()->create();
-//        $response = $this->get(route('task_statuses.create', $taskStatus->id));
-//        $response->assertStatus(200);
-//        $response->assertSeeText($taskStatus->name);
-//        $response->assertSee('<tr>', false);
-//    }
-
     public function testCreateIfUserIsNotAuthenticated()
     {
         if (!Auth::check()) {
@@ -110,13 +101,14 @@ class TaskStatusTest extends TestCase
     {
         // uncorrected test
 
-//        $taskStatus = TaskStatus::factory()->create();
-//        $params = [
-//            '_token' => csrf_token(),
-//            'name' => 'needed correction',
-//        ];
-//        $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
-//        $response->assertSessionHasNoErrors();
+        $taskStatus = TaskStatus::factory()->create();
+        $params = [
+            '_token' => csrf_token(),
+            'name' => 'needed correction',
+        ];
+        $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
+        $response->assertRedirect();
+        $response->assertSessionHasNoErrors();
     }
 
     public function testDestroy()

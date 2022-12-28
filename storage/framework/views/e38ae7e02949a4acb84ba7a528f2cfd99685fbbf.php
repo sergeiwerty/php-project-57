@@ -1,7 +1,7 @@
 <?php $__env->startSection('content'); ?>
             <div class="grid col-span-full">
                 <h1 class="mb-5">Изменение статуса</h1>
-                <?php echo e(Form::model($updatedTaskStatus, ['url' => route('task_statuses.update', $updatedTaskStatus), 'method' => 'PATCH', 'class' => 'w-50'])); ?>
+                <?php echo e(Form::model($taskStatus, ['url' => route('task_statuses.update', $taskStatus), 'method' => 'PATCH', 'class' => 'w-50'])); ?>
 
                     <?php echo csrf_field(); ?>
                     <div class="flex flex-col">

@@ -1,5 +1,5 @@
 <div>
-    {{ Form::label('name', 'Имя') }}
+    {{ Form::label('name', __('taskStatus.Status name')) }}
 </div>
 <div class="mt-5">
     {{ Form::text('name', null, ['class' => 'rounded border-gray-300 w-1/3']) }}

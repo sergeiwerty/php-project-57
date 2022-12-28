@@ -10,7 +10,23 @@ h2 {
     font-size: 2rem;
 }
 
+.alert.alert-danger  {
+    min-height: 2em;
+    padding: 0.5em;
+    margin-top: 2em;
+
+    background: #fecdd3;
+}
+
 .alert.alert-info  {
     --tw-text-opacity: 1;
     color:rgb(225 29 72 / var(--tw-text-opacity));
+}
+
+.alert.alert-success {
+    min-height: 2em;
+    padding: 0.5em;
+    margin-top: 2em;
+
+    background: #bbf7d0;
 }

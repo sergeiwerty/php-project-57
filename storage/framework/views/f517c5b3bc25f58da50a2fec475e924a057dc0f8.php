@@ -1,5 +1,5 @@
 <div>
-    <?php echo e(Form::label('name', 'Имя')); ?>
+    <?php echo e(Form::label('name', __('taskStatus.Status name'))); ?>
 
 </div>
 <div class="mt-5">

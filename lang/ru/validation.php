@@ -117,5 +117,13 @@ return [
     */
 
     'attributes' => [],
-
+    'The password must not be greater than :max characters.' => 'Пароль должен иметь длину не более :max символов',
+    'The password must be at least :min characters.' => 'Пароль должен иметь длину не менее :min символов',
+    'The password and confirmation do not match.' => 'Пароль и подтверждение не совпадают',
+    'Field is required'=> 'Это обязательное поле',
+    'Exceeded maximum name length of :max characters' => 'Превышена максимальная длина имени в :max символов',
+    'The task name has already been taken' => 'Задача с таким именем уже существует',
+    'The label name has already been taken' => 'Метка с таким именем уже существует',
+    'The status name has already been taken' => 'Статус с таким именем уже существует',
+    'The name should be no more than :max characters' => 'Имя должно содержать не более :max символов',
 ];
