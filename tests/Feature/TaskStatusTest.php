@@ -16,15 +16,6 @@ class TaskStatusTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-//
-//        $createdAt = Carbon::now();
-//        $this->urlDataSet = [
-//            'name' =>  'http://example.com/',
-//            'created_at' => $createdAt,
-//        ];
-//
-//        $this->id = DB::table('urls')
-//            ->insertGetId($this->urlDataSet);
     }
 
     public function testIndex()
@@ -52,9 +43,23 @@ class TaskStatusTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function testStoreIfUserIsNotAuthenticated()
+    {
+        $params = [
+            '_token' => csrf_token(),
+            'name' => 'something name',
+        ];
+
+        if (!Auth::check()) {
+            $response = $this->post(route('task_statuses.store'), $params);
+            $response->assertRedirect('/login');
+        }
+    }
     public function testStoreWithValidationErrors()
     {
-        $taskStatus = TaskStatus::factory()->create();
+        $user = User::factory()->create(['id' => 1]);
+        $this->actingAs($user);
+
         $params = [
             '_token' => csrf_token(),
             'name' => '',
@@ -68,7 +73,11 @@ class TaskStatusTest extends TestCase
 
     public function testStore()
     {
+        $user = User::factory()->create(['id' => 1]);
+        $this->actingAs($user);
+
         $params = [
+            '_token' => csrf_token(),
             'name' => 'pending approval',
         ];
         $response = $this->post(route('task_statuses.store'), $params);
@@ -79,16 +88,44 @@ class TaskStatusTest extends TestCase
         ]);
     }
 
+    public function testEditIfUserIsNotAuthenticated()
+    {
+        if (!Auth::check()) {
+            $taskStatus = TaskStatus::factory()->create();
+            $response = $this->get(route('task_statuses.edit', $taskStatus));
+            $response->assertRedirect('/login');
+        }
+    }
     public function testEdit()
     {
+        $user = User::factory()->create(['id' => 5]);
+        $this->actingAs($user);
         $taskStatus = TaskStatus::factory()->create();
+
         $response = $this->get(route('task_statuses.edit', $taskStatus));
+
         $response->assertSee('PATCH');
         $response->assertStatus(200);
     }
+
+    public function testUpdateIfUserIsNotAuthenticated()
+    {
+        if (!Auth::check()) {
+            $taskStatus = TaskStatus::factory()->create();
+            $params = [
+                '_token' => csrf_token(),
+                'name' => 'updated name',
+            ];
+            $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
+            $response->assertRedirect('/login');
+        }
+    }
     public function testUpdateWithValidationErrors()
     {
+        $user = User::factory()->create(['id' => 5]);
+        $this->actingAs($user);
         $taskStatus = TaskStatus::factory()->create();
+
         $params = [
             '_token' => csrf_token(),
             'name' => '',
@@ -99,9 +136,10 @@ class TaskStatusTest extends TestCase
 
     public function testUpdate()
     {
-        // uncorrected test
-
+        $user = User::factory()->create(['id' => 2]);
+        $this->actingAs($user);
         $taskStatus = TaskStatus::factory()->create();
+
         $params = [
             '_token' => csrf_token(),
             'name' => 'needed correction',
@@ -111,9 +149,22 @@ class TaskStatusTest extends TestCase
         $response->assertSessionHasNoErrors();
     }
 
-    public function testDestroy()
+    public function testDestroyIfUserIsNotAuthenticated()
     {
         $taskStatus = TaskStatus::factory()->create();
+
+        if (!Auth::check()) {
+            $response = $this->delete(route('task_statuses.destroy', $taskStatus));
+            $response->assertRedirect('/login');
+        }
+    }
+
+    public function testDestroy()
+    {
+        $user = User::factory()->create(['id' => 7]);
+        $this->actingAs($user);
+        $taskStatus = TaskStatus::factory()->create();
+
         $response = $this->delete(route('task_statuses.destroy', $taskStatus));
         $response->assertStatus(302);
 

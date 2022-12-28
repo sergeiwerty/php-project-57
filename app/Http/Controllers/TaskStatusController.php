@@ -52,23 +52,26 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:100|unique:App\Models\TaskStatus'
-        ], [
-            'name.required' => __('validation.Field is required'),
-            'name.max:50' => __('validation.Exceeded maximum name length of :max characters'),
-            'name.unique' => __('validation.The status name has already been taken'),
-        ]);
+        if (Auth::check()) {
+            $this->validate($request, [
+                'name' => 'required|max:100|unique:App\Models\TaskStatus'
+            ], [
+                'name.required' => __('validation.Field is required'),
+                'name.max:50' => __('validation.Exceeded maximum name length of :max characters'),
+                'name.unique' => __('validation.The status name has already been taken'),
+            ]);
 
-        $taskStatus = new TaskStatus();
-        $taskStatus->fill($request->all());
-        $taskStatus->save();
+            $taskStatus = new TaskStatus();
+            $taskStatus->fill($request->all());
+            $taskStatus->save();
 
-        if(TaskStatus::find($taskStatus->id)) {
-            flash(__('taskStatus.Status has been added successfully'))->success();
+            if(TaskStatus::find($taskStatus->id)) {
+                flash(__('taskStatus.Status has been added successfully'))->success();
+            }
+
+            return redirect()->route('task_statuses.index');
         }
-
-        return redirect()->route('task_statuses.index');
+        return redirect('/login');
     }
 
     /**
@@ -79,8 +82,11 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        $taskStatus = TaskStatus::findOrFail($taskStatus->id);
-        return view('taskStatus.edit', compact('taskStatus'));
+        if (Auth::check()) {
+            $taskStatus = TaskStatus::findOrFail($taskStatus->id);
+            return view('taskStatus.edit', compact('taskStatus'));
+        }
+        return redirect('/login');
     }
 
     /**
@@ -92,42 +98,43 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        $taskStatus = TaskStatus::findOrFail($taskStatus->id);
-        $this->validate($request, [
-            'name' => 'required|max:50|unique:App\Models\TaskStatus',
-        ], [
-            'name.required' => __('validation.Field is required'),
-            'name.max:50' => __('validation.Exceeded maximum name length of :max characters'),
-            'name.unique' => __('validation.The task name has already been taken'),
-        ]);
+        if (Auth::check()) {
+            $taskStatus = TaskStatus::findOrFail($taskStatus->id);
+            $this->validate($request, [
+                'name' => 'required|max:50|unique:App\Models\TaskStatus',
+            ], [
+                'name.required' => __('validation.Field is required'),
+                'name.max:50' => __('validation.Exceeded maximum name length of :max characters'),
+                'name.unique' => __('validation.The task name has already been taken'),
+            ]);
 
-//        $taskStatus = new TaskStatus();
-        $taskStatus->fill($request->all());
-        $taskStatus->save();
+            $taskStatus->fill($request->all());
+            $taskStatus->save();
 
-        return redirect()->route('task_statuses.index');
+            return redirect()->route('task_statuses.index');
+        }
+
+        return redirect('/login');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(TaskStatus $taskStatus)
     {
-//        dump($taskStatus);
-//        $deletedTaskStatus = TaskStatus::find($taskStatus);
-        if (!$taskStatus->tasks()->exists()) {
-            $taskStatus->delete();
+        if (Auth::check()) {
+            if (!$taskStatus->tasks()->exists()) {
+                $taskStatus->delete();
+                flash(__('taskStatus.Status has been deleted successfully'))->success();
+                return redirect()->route('task_statuses.index');
+            }
+
+            flash(__('taskStatus.Failed to delete status'))->error();
+            return redirect()->route('task_statuses.index');
         }
-
-        flash(__('taskStatus.Failed to delete status'))->error();
-        return redirect()->route('task_statuses.index');
-    }
-
-    public function show()
-    {
-        //
+        return redirect('/login');
     }
 }
