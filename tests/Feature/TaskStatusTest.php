@@ -13,10 +13,10 @@ class TaskStatusTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
+//    public function setUp(): void
+//    {
+//        parent::setUp();
+//    }
 
     public function testIndex()
     {
@@ -110,15 +110,13 @@ class TaskStatusTest extends TestCase
 
     public function testUpdateIfUserIsNotAuthenticated()
     {
-        if (!Auth::check()) {
-            $taskStatus = TaskStatus::factory()->create();
-            $params = [
-                '_token' => csrf_token(),
-                'name' => 'updated name',
-            ];
-            $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
-            $response->assertRedirect('/login');
-        }
+        $taskStatus = TaskStatus::factory()->create();
+        $params = [
+            '_token' => csrf_token(),
+            'name' => 'updated name',
+        ];
+        $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
+        $response->assertRedirect('/login');
     }
     public function testUpdateWithValidationErrors()
     {
@@ -153,10 +151,8 @@ class TaskStatusTest extends TestCase
     {
         $taskStatus = TaskStatus::factory()->create();
 
-        if (!Auth::check()) {
-            $response = $this->delete(route('task_statuses.destroy', $taskStatus));
-            $response->assertRedirect('/login');
-        }
+        $response = $this->delete(route('task_statuses.destroy', $taskStatus));
+        $response->assertRedirect('/login');
     }
 
     public function testDestroy()
@@ -166,7 +162,7 @@ class TaskStatusTest extends TestCase
         $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->delete(route('task_statuses.destroy', $taskStatus));
-        $response->assertStatus(302);
+        $response->assertRedirect();
 
         $taskStatusTest = TaskStatus::find($taskStatus->id);
         $this->assertNull($taskStatusTest);

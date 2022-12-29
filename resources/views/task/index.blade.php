@@ -8,6 +8,7 @@
                     <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={{ route('tasks.create') }}>Создать задачу</a>
                 </div>
             @endauth
+            @include('flash::message')
             <table class="mt-4">
                 <thead class="border-b-2 border-solid border-black text-left">
                 <tr>
@@ -37,9 +38,18 @@
 {{--                               rel="nofollow">--}}
 {{--                                Удалить--}}
 {{--                            </a>--}}
+                            <a href="{{ route('tasks.destroy', $task) }}"
+                               class="text-red-600 hover:text-red-900"
+                               data-confirm="Вы уверены?"
+                               data-method="delete"
+                               rel="nofollow">
+                                Удалить
+                            </a>
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
                                 Изменить
                             </a>
+                            {{ $task->creator->id }}
+                            {{ Auth::id() }}
                         </td>
                     </tr>
                 @endforeach

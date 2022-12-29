@@ -14,7 +14,9 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|
+     * \Illuminate\Contracts\View\Factory|
+     * \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -25,7 +27,9 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|
+     * \Illuminate\Contracts\View\Factory|
+     * \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -43,22 +47,40 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $task = new Task();
-        $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
-        $task->save();
+        if (Auth::check()) {
+            $this->validate($request, [
+                'name' => 'required|unique:App\Models\Task',
+                'status_id' => 'required',
+            ], [
+                'name.required' => __('validation.Field is required'),
+                'name.unique' => __('validation.The task name has already been taken'),
+                'status_id' => __('validation.Field is required'),
+            ]);
 
-        return redirect()->route('tasks.index');
+            $task = new Task();
+            $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
+            $task->save();
+
+            if(TaskStatus::find($task->id)) {
+                flash(__('task.Task has been added successfully'))->success();
+            }
+            return redirect()->route('tasks.index');
+        }
+
+        return redirect('/login');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|
+     *         \Illuminate\Contracts\View\Factory|
+     *         \Illuminate\Contracts\View\View
      */
     public function show(Task $task)
     {
@@ -70,15 +92,20 @@ class TaskController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|
+     *         \Illuminate\Contracts\View\Factory|
+     *         \Illuminate\Contracts\View\View
      */
     public function edit(Task $task)
     {
-        $updatedTask = Task::findOrFail($task->id);
-        $statuses = TaskStatus::all()->pluck('name');
-        $performers = User::all()->pluck('name');
-        $labels = Label::all()->pluck('name');
-        return view('task.edit', compact('updatedTask', 'statuses', 'performers', 'labels'));
+        if (Auth::check()) {
+            $updatedTask = Task::findOrFail($task->id);
+            $statuses = TaskStatus::all()->pluck('name');
+            $performers = User::all()->pluck('name');
+            $labels = Label::all()->pluck('name');
+            return view('task.edit', compact('updatedTask', 'statuses', 'performers', 'labels'));
+        }
+        return redirect('/login');
     }
 
     /**
@@ -86,29 +113,47 @@ class TaskController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Task $task)
     {
-        $updatedTask = Task::findOrFail($task->id);
+        if (Auth::check()) {
+            $updatedTask = Task::findOrFail($task->id);
 
-//        validations
+            $this->validate($request, [
+                'name' => 'required|unique:App\Models\Task,name' . $updatedTask->id,
+                'status_id' => 'required',
+            ], [
+                'name.required' => __('validation.Field is required'),
+                'name.unique' => __('validation.The task name has already been taken'),
+                'status_id' => __('validation.Field is required'),
+            ]);
 
-        $task = new Task();
-        $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
-        $task->save();
+            $task = new Task();
+            $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
+            $task->save();
 
-        return redirect()->route('tasks.index');
+            return redirect()->route('tasks.index');
+        }
+
+        return redirect('/login');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Task $task)
     {
-        //
+        if (Auth::check()) {
+            if ($task->creator->id === Auth::id()) {
+                $task->delete();
+                return redirect()->route('tasks.index');
+            }
+            return redirect('tasks.index');
+        }
+        return redirect('/login');
     }
 }
