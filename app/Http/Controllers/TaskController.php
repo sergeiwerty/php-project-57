@@ -65,10 +65,10 @@ class TaskController extends Controller
             $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
             $task->save();
 
-            if (TaskStatus::find($task->id)) {
+            if (Task::find($task->id)) {
                 flash(__('task.Task has been added successfully'))->success();
+                return redirect()->route('tasks.index');
             }
-            return redirect()->route('tasks.index');
         }
 
         return redirect('/login');
@@ -132,6 +132,7 @@ class TaskController extends Controller
             $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
             $task->save();
 
+            flash(__('task.Task has been updated successfully'))->success();
             return redirect()->route('tasks.index');
         }
 
@@ -152,6 +153,8 @@ class TaskController extends Controller
                 flash(__('task.Task has been deleted successfully'))->success();
                 return redirect()->route('tasks.index');
             }
+
+            flash(__('task.Task has been deleted successfully'))->success();
             return redirect()->route('tasks.index');
         }
         return redirect('/login');
