@@ -69,7 +69,7 @@ class TaskStatusController extends Controller
             $taskStatus->fill($request->all());
             $taskStatus->save();
 
-            if(TaskStatus::find($taskStatus->id)) {
+            if (TaskStatus::find($taskStatus->id)) {
                 flash(__('taskStatus.Status has been added successfully'))->success();
             }
 

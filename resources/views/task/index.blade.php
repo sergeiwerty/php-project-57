@@ -31,13 +31,6 @@
                         <td>{{ is_null($task->performer) ? '' : $task->performer->name }}</td>
                         <td>{{ $task->created_at }}</td>
                         <td>
-{{--                            <a href="{{ route('task_statuses.destroy', $taskStatus) }}"--}}
-{{--                               class="text-red-600 hover:text-red-900"--}}
-{{--                               data-confirm="Вы уверены?"--}}
-{{--                               data-method="delete"--}}
-{{--                               rel="nofollow">--}}
-{{--                                Удалить--}}
-{{--                            </a>--}}
                             <a href="{{ route('tasks.destroy', $task) }}"
                                class="text-red-600 hover:text-red-900"
                                data-confirm="Вы уверены?"
@@ -48,8 +41,6 @@
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
                                 Изменить
                             </a>
-                            {{ $task->creator->id }}
-                            {{ Auth::id() }}
                         </td>
                     </tr>
                 @endforeach

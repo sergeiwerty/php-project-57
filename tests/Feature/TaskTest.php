@@ -85,16 +85,17 @@ class TaskTest extends TestCase
 
     public function testStore()
     {
-        $user = User::factory()->create(['id' => 5]);
+        $user = User::factory()->create(['id' => 2]);
+        $user2 = User::factory()->create(['id' => 5]);
         $this->actingAs($user);
 
         TaskStatus::factory()->count(3)->create();
 
         $params = [
-            '_token' => csrf_token(),
+//            '_token' => csrf_token(),
             'name' => 'fix all errors',
             'status_id' => 3,
-            'created_by_id' => 1
+            'assigned_to_id' => 5
         ];
         $response = $this->post(route('tasks.store'), $params);
 

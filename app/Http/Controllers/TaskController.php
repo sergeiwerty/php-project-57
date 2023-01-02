@@ -35,9 +35,9 @@ class TaskController extends Controller
     {
         if (Auth::check()) {
             $task = new Task();
-            $statuses = TaskStatus::all()->pluck('name');
-            $performers = User::all()->pluck('name');
-            $labels = Label::all()->pluck('name');
+            $statuses = TaskStatus::all()->pluck('name', 'id');
+            $performers = User::all()->pluck('name', 'id');
+            $labels = Label::all()->pluck('name', 'id');
             return view('task.create', compact('task', 'statuses', 'performers', 'labels'));
         }
         return redirect('/login');
@@ -65,7 +65,7 @@ class TaskController extends Controller
             $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
             $task->save();
 
-            if(TaskStatus::find($task->id)) {
+            if (TaskStatus::find($task->id)) {
                 flash(__('task.Task has been added successfully'))->success();
             }
             return redirect()->route('tasks.index');
@@ -99,11 +99,11 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         if (Auth::check()) {
-            $updatedTask = Task::findOrFail($task->id);
+            $task = Task::findOrFail($task->id);
             $statuses = TaskStatus::all()->pluck('name');
             $performers = User::all()->pluck('name');
             $labels = Label::all()->pluck('name');
-            return view('task.edit', compact('updatedTask', 'statuses', 'performers', 'labels'));
+            return view('task.edit', compact('task', 'statuses', 'performers', 'labels'));
         }
         return redirect('/login');
     }
@@ -118,10 +118,10 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         if (Auth::check()) {
-            $updatedTask = Task::findOrFail($task->id);
+            $task = Task::findOrFail($task->id);
 
             $this->validate($request, [
-                'name' => 'required|unique:App\Models\Task,name' . $updatedTask->id,
+                'name' => 'required|unique:App\Models\Task,name,' . $task->id,
                 'status_id' => 'required',
             ], [
                 'name.required' => __('validation.Field is required'),
@@ -150,9 +150,10 @@ class TaskController extends Controller
         if (Auth::check()) {
             if ($task->creator->id === Auth::id()) {
                 $task->delete();
+                flash(__('task.Task has been deleted successfully'))->success();
                 return redirect()->route('tasks.index');
             }
-            return redirect('tasks.index');
+            return redirect()->route('tasks.index');
         }
         return redirect('/login');
     }
