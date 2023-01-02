@@ -3,12 +3,13 @@
 @section('content')
          <div class="grid col-span-full">
              <h2 class="mb-5">
-                 Просмотр задачи: {{ $task->name }} <a href="https://php-task-manager-ru.hexlet.app/tasks/1/edit">⚙</a>
+                 {{ __('task.View a task') }}: {{ $task->name }}
+                 <a href="https://php-task-manager-ru.hexlet.app/tasks/1/edit">⚙</a>
              </h2>
-             <p><span class="font-black">Имя: </span>{{ $task->description }}</p>
-             <p><span class="font-black">Статус: </span>{{ $task->status->name }}</p>
-             <p><span class="font-black">Описание: </span>{{ $task->description }}</p>
-             <p><span class="font-black">Метки: </span></p>
+             <p><span class="font-black">{{ __('task.Name') }}: </span>{{ $task->description }}</p>
+             <p><span class="font-black">{{ __('task.Status') }}: </span>{{ $task->status->name }}</p>
+             <p><span class="font-black">{{ __('task.Description') }}: </span>{{ $task->description }}</p>
+             <p><span class="font-black">{{ __('task.Labels') }}: </span></p>
              <div>
 {{--                @foreach($labels as $label)--}}
 {{--                    <div class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-blue-700 rounded-full">--}}

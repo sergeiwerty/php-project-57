@@ -1,6 +1,6 @@
 <?php echo $__env->make('flash::message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div>
-    <?php echo e(Form::label('name', 'Имя')); ?>
+    <?php echo e(Form::label('name', __('task.Name'))); ?>
 
 </div>
 <div class="mt-2">
@@ -14,7 +14,7 @@
     </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <div class="mt-2">
-    <?php echo e(Form::label('description', 'Описание')); ?>
+    <?php echo e(Form::label('description', __('task.Description'))); ?>
 
 </div>
 <div >
@@ -22,7 +22,7 @@
 
 </div>
 <div class="mt-2">
-    <?php echo e(Form::label('status_id', 'Статус')); ?>
+    <?php echo e(Form::label('status_id', __('task.Status'))); ?>
 
 </div>
 <div >
@@ -39,7 +39,7 @@
     </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <div class="mt-2">
-    <?php echo e(Form::label('assigned_to_id', 'Исполнитель')); ?>
+    <?php echo e(Form::label('assigned_to_id', __('task.Performer'))); ?>
 
 </div>
 <div >
@@ -50,7 +50,7 @@
 
 </div>
 <div class="mt-2">
-    <?php echo e(Form::label('labels', 'Метки')); ?>
+    <?php echo e(Form::label('labels', __('task.Labels'))); ?>
 
 </div>
 <div >

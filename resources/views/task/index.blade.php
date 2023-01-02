@@ -2,10 +2,13 @@
 
 @section('content')
         <div class="grid col-span-full">
-            <h1 class="mb-5">Задачи</h1>
+            <h1 class="mb-5">{{ __('task.Tasks') }}</h1>
             @auth
                 <div>
-                    <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={{ route('tasks.create') }}>Создать задачу</a>
+                    <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                       href={{ route('tasks.create') }}>
+                        {{ __('task.Create task') }}
+                    </a>
                 </div>
             @endauth
             @include('flash::message')
@@ -13,12 +16,12 @@
                 <thead class="border-b-2 border-solid border-black text-left">
                 <tr>
                     <th>ID</th>
-                    <th>Статус</th>
-                    <th>Имя</th>
-                    <th>Автор</th>
-                    <th>Исполнитель</th>
-                    <th>Дата создания</th>
-                    <th>Действия</th>
+                    <th>{{ __('task.Status') }}</th>
+                    <th>{{ __('task.Name') }}</th>
+                    <th>{{ __('task.Author') }}</th>
+                    <th>{{ __('task.Performer') }}</th>
+                    <th>{{ __('task.Date of creation') }}</th>
+                    <th>{{ __('task.Actions') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,7 +29,11 @@
                     <tr class="border-b border-dashed text-left">
                         <th>{{ $task->id }}</th>
                         <td>{{ $task->status->name }}</td>
-                        <td><a href="{{ route('tasks.show', [$task]) }}" class="text-blue-600 hover:text-blue-900">{{ $task->name }}</a></td>
+                        <td>
+                            <a href="{{ route('tasks.show', [$task]) }}"
+                               class="text-blue-600 hover:text-blue-900">{{ $task->name }}
+                            </a>
+                        </td>
                         <td>{{ $task->creator->name }}</td>
                         <td>{{ is_null($task->performer) ? '' : $task->performer->name }}</td>
                         <td>{{ $task->created_at }}</td>
@@ -36,10 +43,10 @@
                                data-confirm="Вы уверены?"
                                data-method="delete"
                                rel="nofollow">
-                                Удалить
+                                {{ __('task.Delete') }}
                             </a>
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
-                                Изменить
+                                {{ __('task.Edit') }}
                             </a>
                         </td>
                     </tr>

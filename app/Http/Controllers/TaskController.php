@@ -129,7 +129,6 @@ class TaskController extends Controller
                 'status_id' => __('validation.Field is required'),
             ]);
 
-            $task = new Task();
             $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
             $task->save();
 

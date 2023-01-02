@@ -1,12 +1,14 @@
 <?php $__env->startSection('content'); ?>
          <div class="grid col-span-full">
              <h2 class="mb-5">
-                 Просмотр задачи: <?php echo e($task->name); ?> <a href="https://php-task-manager-ru.hexlet.app/tasks/1/edit">⚙</a>
+                 <?php echo e(__('task.View a task')); ?>: <?php echo e($task->name); ?>
+
+                 <a href="https://php-task-manager-ru.hexlet.app/tasks/1/edit">⚙</a>
              </h2>
-             <p><span class="font-black">Имя: </span><?php echo e($task->description); ?></p>
-             <p><span class="font-black">Статус: </span><?php echo e($task->status->name); ?></p>
-             <p><span class="font-black">Описание: </span><?php echo e($task->description); ?></p>
-             <p><span class="font-black">Метки: </span></p>
+             <p><span class="font-black"><?php echo e(__('task.Name')); ?>: </span><?php echo e($task->description); ?></p>
+             <p><span class="font-black"><?php echo e(__('task.Status')); ?>: </span><?php echo e($task->status->name); ?></p>
+             <p><span class="font-black"><?php echo e(__('task.Description')); ?>: </span><?php echo e($task->description); ?></p>
+             <p><span class="font-black"><?php echo e(__('task.Labels')); ?>: </span></p>
              <div>
 
 

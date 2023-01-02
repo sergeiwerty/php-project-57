@@ -1,6 +1,6 @@
 @include('flash::message')
 <div>
-    {{ Form::label('name', 'Имя') }}
+    {{ Form::label('name', __('task.Name')) }}
 </div>
 <div class="mt-2">
     {{ Form::text('name', null, ['class' => 'rounded border-gray-300 w-1/3']) }}
@@ -11,13 +11,13 @@
     </div>
 @endforeach
 <div class="mt-2">
-    {{ Form::label('description', 'Описание') }}
+    {{ Form::label('description', __('task.Description')) }}
 </div>
 <div >
     {{ Form::textarea('description', null, ['class' => 'rounded border-gray-300 w-1/3 h-32']) }}
 </div>
 <div class="mt-2">
-    {{ Form::label('status_id', 'Статус') }}
+    {{ Form::label('status_id', __('task.Status')) }}
 </div>
 <div >
     {{ Form::select('status_id', $statuses, null, [
@@ -31,7 +31,7 @@
     </div>
 @endforeach
 <div class="mt-2">
-    {{ Form::label('assigned_to_id', 'Исполнитель') }}
+    {{ Form::label('assigned_to_id', __('task.Performer')) }}
 </div>
 <div >
     {{ Form::select('assigned_to_id', $performers, null, [
@@ -40,7 +40,7 @@
     ]) }}
 </div>
 <div class="mt-2">
-    {{ Form::label('labels', 'Метки') }}
+    {{ Form::label('labels', __('task.Labels')) }}
 </div>
 <div >
     {{ Form::select('labels', $labels, null, [
