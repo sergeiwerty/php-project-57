@@ -4,7 +4,7 @@ start:
 setup:
 	make install
 	cp -n .env.example .env
-	php artisan key:generate --ansi
+	php artisan key:gen --ansi
 	touch database/database.sqlite
 	php artisan migrate
 	php artisan db:seed
