@@ -1,5 +1,8 @@
 start:
-	php artisan serve --host 0.0.0.0
+	npm run dev
+
+#start:
+#	php artisan serve --host 0.0.0.0
 
 setup:
 	make install
