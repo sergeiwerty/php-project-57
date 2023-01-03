@@ -38,16 +38,20 @@
                         <td>{{ is_null($task->performer) ? '' : $task->performer->name }}</td>
                         <td>{{ $task->created_at }}</td>
                         <td>
-                            <a href="{{ route('tasks.destroy', $task) }}"
-                               class="text-red-600 hover:text-red-900"
-                               data-confirm="Вы уверены?"
-                               data-method="delete"
-                               rel="nofollow">
-                                {{ __('task.Delete') }}
-                            </a>
-                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
-                                {{ __('task.Edit') }}
-                            </a>
+                            @can('delete', $task)
+                                <a href="{{ route('tasks.destroy', $task) }}"
+                                   class="text-red-600 hover:text-red-900"
+                                   data-confirm="Вы уверены?"
+                                   data-method="delete"
+                                   rel="nofollow">
+                                    {{ __('task.Delete') }}
+                                </a>
+                            @endcan
+                            @can('update', $task)
+                                <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
+                                    {{ __('task.Edit') }}
+                                </a>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

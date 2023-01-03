@@ -38,18 +38,22 @@
                         <td><?php echo e(is_null($task->performer) ? '' : $task->performer->name); ?></td>
                         <td><?php echo e($task->created_at); ?></td>
                         <td>
-                            <a href="<?php echo e(route('tasks.destroy', $task)); ?>"
-                               class="text-red-600 hover:text-red-900"
-                               data-confirm="Вы уверены?"
-                               data-method="delete"
-                               rel="nofollow">
-                                <?php echo e(__('task.Delete')); ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $task)): ?>
+                                <a href="<?php echo e(route('tasks.destroy', $task)); ?>"
+                                   class="text-red-600 hover:text-red-900"
+                                   data-confirm="Вы уверены?"
+                                   data-method="delete"
+                                   rel="nofollow">
+                                    <?php echo e(__('task.Delete')); ?>
 
-                            </a>
-                            <a class="text-blue-600 hover:text-blue-900" href="<?php echo e(route('tasks.edit', $task)); ?>">
-                                <?php echo e(__('task.Edit')); ?>
+                                </a>
+                            <?php endif; ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $task)): ?>
+                                <a class="text-blue-600 hover:text-blue-900" href="<?php echo e(route('tasks.edit', $task)); ?>">
+                                    <?php echo e(__('task.Edit')); ?>
 
-                            </a>
+                                </a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
