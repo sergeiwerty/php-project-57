@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -21,7 +22,7 @@ class TaskStatusController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|
+     * @return Application|
      *         \Illuminate\Contracts\View\Factory|
      *         \Illuminate\Contracts\View\View
      */
@@ -34,7 +35,7 @@ class TaskStatusController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|
+     * @return Application|
      *         \Illuminate\Contracts\View\Factory|
      *         \Illuminate\Contracts\View\View
      */
@@ -58,7 +59,7 @@ class TaskStatusController extends Controller
     {
         if (Auth::check()) {
             $this->validate($request, [
-                'name' => 'required|max:100|unique:App\Models\TaskStatus'
+                'name' => 'required|max:50|unique:App\Models\TaskStatus'
             ], [
                 'name.required' => __('validation.Field is required'),
                 'name.max:50' => __('validation.Exceeded maximum name length of :max characters'),
@@ -82,7 +83,7 @@ class TaskStatusController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\TaskStatus  $taskStatus
-     * @return \Illuminate\Contracts\Foundation\Application|
+     * @return Application|
      *         \Illuminate\Contracts\View\Factory|
      *         \Illuminate\Contracts\View\View
      */

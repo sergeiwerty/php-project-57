@@ -25,7 +25,7 @@
                 <tr class="border-b border-dashed text-left">
                     <th><?php echo e($taskStatus->id); ?></th>
                     <td><?php echo e($taskStatus->name); ?></td>
-                    <td><?php echo e($taskStatus->created_at); ?></td>
+                    <td><?php echo e($taskStatus->created_at->format('d.m.Y')); ?></td>
                     <td>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['update', 'delete'], $taskStatus)): ?>
                             <a href="<?php echo e(route('task_statuses.destroy', $taskStatus)); ?>"

@@ -26,7 +26,7 @@
                 <tr class="border-b border-dashed text-left">
                     <th>{{ $taskStatus->id }}</th>
                     <td>{{ $taskStatus->name }}</td>
-                    <td>{{ $taskStatus->created_at }}</td>
+                    <td>{{ $taskStatus->created_at->format('d.m.Y') }}</td>
                     <td>
                         @canany(['update', 'delete'], $taskStatus)
                             <a href="{{ route('task_statuses.destroy', $taskStatus) }}"

@@ -33,7 +33,7 @@ class Task extends Model
         return $this->belongsTo(TaskStatus::class, 'status_id');
     }
 
-    public function labels(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function labels()
     {
         return $this->belongsToMany(Label::class);
     }

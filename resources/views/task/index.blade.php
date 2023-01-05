@@ -36,7 +36,7 @@
                         </td>
                         <td>{{ $task->creator->name }}</td>
                         <td>{{ is_null($task->performer) ? '' : $task->performer->name }}</td>
-                        <td>{{ $task->created_at }}</td>
+                        <td>{{ $task->created_at->format('d.m.Y') }}</td>
                         <td>
                             @can('delete', $task)
                                 <a href="{{ route('tasks.destroy', $task) }}"

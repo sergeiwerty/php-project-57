@@ -43,8 +43,9 @@
     {{ Form::label('labels', __('task.Labels')) }}
 </div>
 <div >
-    {{ Form::select('labels', $labels, null, [
-        'class' => 'rounded border-gray-300 w-1/3',
-        'placeholder' => '----------',
+    {{ Form::select('labels[]', $labels, is_null($task->labels) ? null : $task->labels, [
+        'class' => 'form-control rounded border-gray-300 w-1/3',
+        'multiple' => 'multiple',
+        'placeholder' => ''
     ]) }}
 </div>

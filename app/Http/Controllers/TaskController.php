@@ -85,7 +85,8 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $task = Task::findOrFail($task->id);
-        return view('task.show', compact('task'));
+        $labels = $task->labels;
+        return view('task.show', compact('task', 'labels'));
     }
 
     /**
@@ -100,9 +101,9 @@ class TaskController extends Controller
     {
         if (Auth::check()) {
             $task = Task::findOrFail($task->id);
-            $statuses = TaskStatus::all()->pluck('name');
-            $performers = User::all()->pluck('name');
-            $labels = Label::all()->pluck('name');
+            $statuses = TaskStatus::all()->pluck('name', 'id');
+            $performers = User::all()->pluck('name', 'id');
+            $labels = Label::all()->pluck('name', 'id');
             return view('task.edit', compact('task', 'statuses', 'performers', 'labels'));
         }
         return redirect('/login');

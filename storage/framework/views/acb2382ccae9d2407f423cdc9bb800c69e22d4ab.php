@@ -36,7 +36,7 @@
                         </td>
                         <td><?php echo e($task->creator->name); ?></td>
                         <td><?php echo e(is_null($task->performer) ? '' : $task->performer->name); ?></td>
-                        <td><?php echo e($task->created_at); ?></td>
+                        <td><?php echo e($task->created_at->format('d.m.Y')); ?></td>
                         <td>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $task)): ?>
                                 <a href="<?php echo e(route('tasks.destroy', $task)); ?>"

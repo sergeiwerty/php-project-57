@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-//use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -13,12 +12,7 @@ class TaskStatusTest extends TestCase
 {
     use RefreshDatabase;
 
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//    }
-
-    public function testIndex()
+    public function testIndex(): void
     {
         $taskStatuses = TaskStatus::factory()->count(10)->create();
         $response = $this->get(route('task_statuses.index'));
@@ -27,7 +21,7 @@ class TaskStatusTest extends TestCase
         $response->assertSeeText($taskStatuses[7]->name);
     }
 
-    public function testCreateIfUserIsNotAuthenticated()
+    public function testCreateIfUserIsNotAuthenticated(): void
     {
         if (!Auth::check()) {
             $response = $this->get(route('task_statuses.create'));
@@ -35,7 +29,7 @@ class TaskStatusTest extends TestCase
         }
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $user = User::factory()->create(['id' => 3]);
         $this->actingAs($user);
@@ -43,10 +37,9 @@ class TaskStatusTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testStoreIfUserIsNotAuthenticated()
+    public function testStoreIfUserIsNotAuthenticated(): void
     {
         $params = [
-            '_token' => csrf_token(),
             'name' => 'something name',
         ];
 
@@ -55,7 +48,8 @@ class TaskStatusTest extends TestCase
             $response->assertRedirect('/login');
         }
     }
-    public function testStoreWithValidationErrors()
+
+    public function testStoreWithValidationErrors(): void
     {
         $user = User::factory()->create(['id' => 1]);
         $this->actingAs($user);
@@ -71,7 +65,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseMissing('task_statuses', $params);
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $user = User::factory()->create(['id' => 1]);
         $this->actingAs($user);
@@ -88,7 +82,7 @@ class TaskStatusTest extends TestCase
         ]);
     }
 
-    public function testEditIfUserIsNotAuthenticated()
+    public function testEditIfUserIsNotAuthenticated(): void
     {
         if (!Auth::check()) {
             $taskStatus = TaskStatus::factory()->create();
@@ -96,7 +90,8 @@ class TaskStatusTest extends TestCase
             $response->assertRedirect('/login');
         }
     }
-    public function testEdit()
+
+    public function testEdit(): void
     {
         $user = User::factory()->create(['id' => 5]);
         $this->actingAs($user);
@@ -108,17 +103,17 @@ class TaskStatusTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testUpdateIfUserIsNotAuthenticated()
+    public function testUpdateIfUserIsNotAuthenticated(): void
     {
         $taskStatus = TaskStatus::factory()->create();
         $params = [
-            '_token' => csrf_token(),
             'name' => 'updated name',
         ];
         $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
         $response->assertRedirect('/login');
     }
-    public function testUpdateWithValidationErrors()
+
+    public function testUpdateWithValidationErrors(): void
     {
         $user = User::factory()->create(['id' => 5]);
         $this->actingAs($user);
@@ -132,14 +127,13 @@ class TaskStatusTest extends TestCase
         $response->assertSessionHasErrors();
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $user = User::factory()->create(['id' => 2]);
         $this->actingAs($user);
         $taskStatus = TaskStatus::factory()->create();
 
         $params = [
-            '_token' => csrf_token(),
             'name' => 'needed correction',
         ];
         $response = $this->patch(route('task_statuses.update', $taskStatus), $params);
@@ -147,7 +141,7 @@ class TaskStatusTest extends TestCase
         $response->assertSessionHasNoErrors();
     }
 
-    public function testDestroyIfUserIsNotAuthenticated()
+    public function testDestroyIfUserIsNotAuthenticated(): void
     {
         $taskStatus = TaskStatus::factory()->create();
 
@@ -155,7 +149,7 @@ class TaskStatusTest extends TestCase
         $response->assertRedirect('/login');
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $user = User::factory()->create(['id' => 7]);
         $this->actingAs($user);
