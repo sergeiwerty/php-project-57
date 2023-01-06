@@ -20,7 +20,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::orderBy('created_at', 'asc')->paginate();
         return view('task.index', compact('tasks'));
     }
 
@@ -52,7 +52,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         if (Auth::check()) {
-            $this->validate($request, [
+            $data = $this->validate($request, [
                 'name' => 'required|unique:App\Models\Task',
                 'status_id' => 'required',
             ], [
@@ -64,6 +64,10 @@ class TaskController extends Controller
             $task = new Task();
             $task->fill(array_merge($request->all(), ['created_by_id' => Auth::id()]));
             $task->save();
+
+            if (isset($request['labels'])) {
+                $task->labels()->attach($request['labels']);
+            }
 
             if (Task::find($task->id)) {
                 flash(__('task.Task has been added successfully'))->success();
@@ -150,6 +154,7 @@ class TaskController extends Controller
     {
         if (Auth::check()) {
             if ($task->creator->id === Auth::id()) {
+                $task->labels()->detach();
                 $task->delete();
                 flash(__('task.Task has been deleted successfully'))->success();
                 return redirect()->route('tasks.index');

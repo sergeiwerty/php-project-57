@@ -92,7 +92,6 @@ class TaskTest extends TestCase
         TaskStatus::factory()->count(3)->create();
 
         $params = [
-//            '_token' => csrf_token(),
             'name' => 'fix all errors',
             'status_id' => 3,
             'assigned_to_id' => 5

@@ -5,12 +5,11 @@
 
                  <a href="<?php echo e(route('tasks.edit', $task)); ?>">⚙</a>
              </h2>
-             <p><span class="font-black"><?php echo e(__('task.Name')); ?>: </span><?php echo e($task->description); ?></p>
+             <p><span class="font-black"><?php echo e(__('task.Name')); ?>: </span><?php echo e($task->name); ?></p>
              <p><span class="font-black"><?php echo e(__('task.Status')); ?>: </span><?php echo e($task->status->name); ?></p>
              <p><span class="font-black"><?php echo e(__('task.Description')); ?>: </span><?php echo e($task->description); ?></p>
              <p><span class="font-black"><?php echo e(__('task.Labels')); ?>: </span></p>
              <div>
-                 <?php echo e(dd($task)); ?>
 
                 <?php $__currentLoopData = $labels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-blue-700 rounded-full">
