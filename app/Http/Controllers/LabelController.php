@@ -111,7 +111,7 @@ class LabelController extends Controller
         if (Auth::check()) {
             $label = Label::findOrFail($label->id);
             $this->validate($request, [
-                'name' => 'required|max:100|unique:App\Models\Label',
+                'name' => 'required|max:100|unique:App\Models\Label,name,' . $label->id,
             ], [
                 'name.required' => __('validation.Field is required'),
                 'name.max:100' => __('validation.Exceeded maximum name length of :max characters'),
